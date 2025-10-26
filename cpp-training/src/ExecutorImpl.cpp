@@ -16,36 +16,10 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
                 Move();
                 break;
             case 'L':
-                switch(pose.heading){
-                    case 'E':
-                        pose.heading = 'N';
-                        break;
-                    case 'N':
-                        pose.heading = 'W';
-                        break;
-                    case 'W':
-                        pose.heading = 'S';
-                        break;
-                    case 'S':
-                        pose.heading = 'E';
-                        break;
-                }
+                TurnLeft();
                 break;
             case 'R':
-                switch(pose.heading){   
-                    case 'N':
-                        pose.heading = 'E';
-                        break;
-                    case 'E':
-                        pose.heading = 'S';
-                        break;
-                    case 'S':
-                        pose.heading = 'W';
-                        break;
-                    case 'W':
-                        pose.heading = 'N';
-                        break;
-                }
+                TurnRight();
                 break;
         }
     }
@@ -66,6 +40,40 @@ void ExecutorImpl::Move() noexcept
             break;
         case 'W':
             pose.x -= 1;
+            break;
+    }
+}
+void ExecutorImpl::TurnLeft() noexcept
+{
+    switch(pose.heading){
+        case 'N':
+            pose.heading = 'W';
+            break;
+        case 'W':
+            pose.heading = 'S';
+            break;
+        case 'S':
+            pose.heading = 'E';
+            break;
+        case 'E':
+            pose.heading = 'N';
+            break;
+    }
+}
+void ExecutorImpl::TurnRight() noexcept
+{
+    switch(pose.heading){
+        case 'N':
+            pose.heading = 'E';
+            break;
+        case 'E':
+            pose.heading = 'S';
+            break;
+        case 'S':
+            pose.heading = 'W';
+            break;
+        case 'W':
+            pose.heading = 'N';
             break;
     }
 }
