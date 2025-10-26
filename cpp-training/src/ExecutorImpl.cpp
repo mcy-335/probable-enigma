@@ -1,4 +1,5 @@
 #include "ExecutorImpl.hpp"
+#include <memory>
 namespace adas
 {
 Executor* Executor::NewExecutor(const Pose& pose) noexcept
@@ -11,16 +12,18 @@ ExecutorImpl::ExecutorImpl(const Pose& pose) noexcept : pose(pose)
 void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     for(char cmd:commands){
-        switch(cmd){
-            case 'M':
-                Move();
-                break;
-            case 'L':
-                TurnLeft();
-                break;
-            case 'R':
-                TurnRight();
-                break;
+        if(cmd == 'M'){
+            std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
+            
+            cmder->DoOperate(*this);
+        }
+        else if(cmd == 'L'){
+            std::unique_ptr<TurnLeftCommand> cmder = std::make_unique<TurnLeftCommand>();
+            cmder->DoOperate(*this);
+        }
+        else if(cmd == 'R'){        
+            std::unique_ptr<TurnRightCommand> cmder = std::make_unique<TurnRightCommand>();
+            cmder->DoOperate(*this);
         }
     }
     
