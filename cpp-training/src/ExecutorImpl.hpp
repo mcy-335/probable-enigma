@@ -1,5 +1,6 @@
 #pragma once
 #include "Executor.hpp"
+#include"Posehandler.hpp"
 namespace adas
 {
 class ExecutorImpl final : public Executor
@@ -21,5 +22,6 @@ bool IsFast(void) const noexcept;
 private:
 Pose pose;
 bool fast{false};
+PoseHandler poseHandler;
 };
 }
